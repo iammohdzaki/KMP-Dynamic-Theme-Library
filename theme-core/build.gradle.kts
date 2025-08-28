@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
@@ -9,7 +10,11 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.maven.publish)
 }
+
+group = "com.zaki.dynamic.core"
+version = findProperty("version") as String? ?: "0.0.1"
 
 android {
     namespace = "com.zaki.dynamic.core"
@@ -48,6 +53,40 @@ kotlin {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
+
+    coordinates(group.toString(), project.name, version.toString())
+
+    pom {
+        name = project.name
+        description.set("Kotlin Multiplatform library for themes")
+        url.set("https://github.com/iammohdzaki/KMP-Dynamic-Theme-Library")
+        inceptionYear = "2025"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "iammohdzaki"
+                name = "Mohammad Zaki"
+                url = "https://github.com/iammohdzaki"
+            }
+        }
+        scm {
+            url = "https://github.com/iammohdzaki/KMP-Dynamic-Theme-Library"
+            connection = "scm:git:git://github.com/iammohdzaki/KMP-Dynamic-Theme-Library.git"
+            developerConnection = "scm:git:ssh://git@github.com/iammohdzaki/KMP-Dynamic-Theme-Library.git"
         }
     }
 }

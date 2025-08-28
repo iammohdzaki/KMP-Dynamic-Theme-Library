@@ -10,5 +10,9 @@ plugins {
 
 allprojects {
     group = "com.zaki.dynamic"
-    version = "0.1.0"
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+    }
 }

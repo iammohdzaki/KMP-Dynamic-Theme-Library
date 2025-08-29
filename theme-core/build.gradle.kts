@@ -13,7 +13,7 @@ plugins {
     alias(libs.plugins.maven.publish)
 }
 
-group = "com.zaki.dynamic.theme"
+group = "io.github.iammohdzaki.kmpalette"
 version = findProperty("version") as String? ?: "0.0.1"
 
 android {

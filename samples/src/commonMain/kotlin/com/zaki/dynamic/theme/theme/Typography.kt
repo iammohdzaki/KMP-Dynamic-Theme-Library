@@ -4,10 +4,10 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import com.zaki.dynamic.samples.generated.resources.OpenSansBold
-import com.zaki.dynamic.samples.generated.resources.OpenSansMedium
-import com.zaki.dynamic.samples.generated.resources.OpenSansRegular
-import com.zaki.dynamic.samples.generated.resources.Res
+import kmp_dynamic_theme.samples.generated.resources.OpenSansBold
+import kmp_dynamic_theme.samples.generated.resources.OpenSansMedium
+import kmp_dynamic_theme.samples.generated.resources.OpenSansRegular
+import kmp_dynamic_theme.samples.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 
 /**

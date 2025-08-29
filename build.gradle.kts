@@ -9,7 +9,6 @@ plugins {
 }
 
 allprojects {
-    group = "com.zaki.dynamic"
     repositories {
         mavenCentral()
         google()

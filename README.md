@@ -1,4 +1,10 @@
-# 🌌 Dynamic Theme – Kotlin Multiplatform Library
+# 🌌 KMPalette – Kotlin Multiplatform Library
+
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.iammohdzaki.kmpalette/theme-core?color=blue)](https://central.sonatype.com/artifact/io.github.iammohdzaki.kmpalette/theme-core)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.0%2B-blueviolet?logo=kotlin)](https://kotlinlang.org/)
+[![License](https://img.shields.io/github/license/iammohdzaki/KMP-Dynamic-Theme-Library)](LICENSE)
+[![Platforms](https://img.shields.io/badge/platforms-KMP%20(Android%2C%20iOS%2C%20Desktop%2C%20Web)-green)]()
+[![Publish](https://github.com/iammohdzaki/KMPalette-Theme-Library/actions/workflows/publish.yml/badge.svg)](https://github.com/iammohdzaki/KMPalette-Theme-Library/actions/workflows/publish.yml)
 
 A **Kotlin Multiplatform** library for **dynamic theme management** using **Jetpack Compose Multiplatform**.
 
@@ -31,8 +37,7 @@ Add the dependency to your `commonMain`:
 
 ```kotlin
 commonMain.dependencies {
-    implementation("com.yourorg:dynamic-theme:<version>")
-    implementation("com.russhwolf:multiplatform-settings:1.1.1") // if using SettingsThemeStore
+    implementation("io.github.iammohdzaki.kmpalette:theme-core:<check-tag-eg.0.0.1>")
 }
 ```
 
@@ -81,26 +86,7 @@ flowchart TD
     UI --> E1
     UI --> E2
     UI --> E3
-```   
-
-## 🏗 Architecture Overview
-
 ```
-dynamic-theme/
- ├── core/               # Theme abstractions
- │   ├── ThemeDefinition
- │   ├── ThemeFamily
- │   ├── ThemeRegistry
- │   ├── ThemeController
- │   └── ThemeStore
- ├── adapters/           # Compose adapters (Material 3)
- │   └── Material3Adapter
- ├── persistence/        # Pluggable persistence stores
- │   └── SettingsThemeStore
- └── ui/                 # Optional UI components
-     └── ThemePickerBottomSheet
-```
-
 
 ---
 
@@ -207,27 +193,31 @@ Example: `SettingsThemeStore` using `MultiplatformSettings`.
 
 ---
 
-## 🧑‍💻 Sample App
+## 🧑‍💻 Example :
 
 A sample scaffold to showcase theme switching:
 
 ```kotlin
-Scaffold(
-    topBar = {
-        TopAppBar(
-            title = { Text("Dynamic Theme") },
-            actions = {
-                IconButton(onClick = { showSheet = true }) {
-                    Icon(Icons.Default.ColorLens, contentDescription = "Pick theme")
-                }
-            }
+@Composable
+fun App() {
+    val controller = remember {
+        val registry = DefaultThemeRegistry().apply {
+            registerFamilies(DefaultMaterial3Themes.families)
+        }
+        ThemeController(
+            registry = registry,
+            store = SettingsThemeStore(Settings()), // You can plug any persistence like Multiplatform Settings,DataStore etc.
+            system = PlatformSystemThemeProvider(),
+            defaultThemeId = ThemeId("m3_light")
         )
     }
-) { padding ->
-    Column(Modifier.padding(padding)) {
-        Button(onClick = {}) { Text("Sample Button") }
-        OutlinedTextField(value = "", onValueChange = {}, label = { Text("Input") })
-        Switch(checked = true, onCheckedChange = {})
+
+    DynamicThemeProvider(
+        controller = controller,
+        adapter = Material3Adapter(),
+        typography = SansTypography()
+    ) {
+        AppScaffold()
     }
 }
 ```
@@ -244,7 +234,4 @@ Scaffold(
 ---
 
 ## 📄 License
-```
-MIT License
-Copyright (c) 2025
-```
+[MIT License](LICENSE)

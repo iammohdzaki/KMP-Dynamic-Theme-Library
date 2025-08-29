@@ -1,4 +1,4 @@
-package com.zaki.dynamic.compose
+package com.zaki.dynamic.core.provider
 
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.zaki.dynamic.core.LocalThemeController
+import com.zaki.dynamic.core.ThemeControllerHolder
 import com.zaki.dynamic.core.adapter.ComposeThemeAdapter
 import com.zaki.dynamic.core.controller.ThemeController
 

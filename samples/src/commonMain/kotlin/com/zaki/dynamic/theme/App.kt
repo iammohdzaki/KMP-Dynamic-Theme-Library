@@ -43,15 +43,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.russhwolf.settings.Settings
-import com.zaki.dynamic.compose.DynamicThemeProvider
-import com.zaki.dynamic.compose.LocalThemeController
-import com.zaki.dynamic.compose.sheet.ThemePickerBottomSheet
+import com.zaki.dynamic.core.provider.DynamicThemeProvider
+import com.zaki.dynamic.core.LocalThemeController
+import com.zaki.dynamic.core.sheet.ThemePickerBottomSheet
 import com.zaki.dynamic.core.controller.ThemeController
 import com.zaki.dynamic.core.model.ThemeId
 import com.zaki.dynamic.core.provider.PlatformSystemThemeProvider
 import com.zaki.dynamic.core.registry.DefaultThemeRegistry
-import com.zaki.dynamic.material3.Material3Adapter
-import com.zaki.dynamic.material3.themes.DefaultMaterial3Themes
+import com.zaki.dynamic.core.adapter.Material3Adapter
+import com.zaki.dynamic.core.themes.DefaultMaterial3Themes
 import com.zaki.dynamic.theme.theme.SansTypography
 
 @Composable

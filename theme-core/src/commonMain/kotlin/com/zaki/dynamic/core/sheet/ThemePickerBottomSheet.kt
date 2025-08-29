@@ -1,4 +1,4 @@
-package com.zaki.dynamic.compose.sheet
+package com.zaki.dynamic.core.sheet
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -35,7 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import com.zaki.dynamic.compose.LocalThemeController
+import com.zaki.dynamic.core.LocalThemeController
 import com.zaki.dynamic.core.model.ThemeMode
 
 @OptIn(ExperimentalMaterial3Api::class)

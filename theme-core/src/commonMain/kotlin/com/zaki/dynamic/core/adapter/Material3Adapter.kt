@@ -1,4 +1,4 @@
-package com.zaki.dynamic.material3
+package com.zaki.dynamic.core.adapter
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -6,7 +6,6 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.zaki.dynamic.core.adapter.ComposeThemeAdapter
 import com.zaki.dynamic.core.model.ThemeDefinition
 
 class Material3Adapter : ComposeThemeAdapter {
@@ -57,7 +56,7 @@ class Material3Adapter : ComposeThemeAdapter {
             surfaceTint = Color(theme.palette.primary)
         )
 
-        MaterialTheme(
+        androidx.compose.material3.MaterialTheme(
             colorScheme = colors,
             typography = typography ?: MaterialTheme.typography,
             shapes = shapes ?: MaterialTheme.shapes,

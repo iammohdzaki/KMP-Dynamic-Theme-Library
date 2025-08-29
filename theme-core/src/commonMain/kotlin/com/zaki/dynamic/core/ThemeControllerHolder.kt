@@ -1,4 +1,4 @@
-package com.zaki.dynamic.compose
+package com.zaki.dynamic.core
 
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.staticCompositionLocalOf

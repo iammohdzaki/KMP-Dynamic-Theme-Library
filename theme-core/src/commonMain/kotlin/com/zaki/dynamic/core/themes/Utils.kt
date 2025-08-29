@@ -1,4 +1,4 @@
-package com.zaki.dynamic.material3.themes
+package com.zaki.dynamic.core.themes
 
 import com.zaki.dynamic.core.model.tokens.ShapeTokens
 import com.zaki.dynamic.core.model.tokens.TextStyleToken

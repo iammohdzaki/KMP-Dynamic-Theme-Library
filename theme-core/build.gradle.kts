@@ -13,11 +13,11 @@ plugins {
     alias(libs.plugins.maven.publish)
 }
 
-group = "com.zaki.dynamic.core"
+group = "com.zaki.dynamic.theme"
 version = findProperty("version") as String? ?: "0.0.1"
 
 android {
-    namespace = "com.zaki.dynamic.core"
+    namespace = "com.zaki.dynamic.theme"
     compileSdk = 35
     defaultConfig { minSdk = 24 }
 
@@ -46,6 +46,7 @@ kotlin {
                 implementation(libs.coroutines.core)
                 implementation(libs.serialization.json)
                 implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
             }
         }
     }

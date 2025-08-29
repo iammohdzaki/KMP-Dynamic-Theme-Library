@@ -1,4 +1,4 @@
-package com.zaki.dynamic.material3.themes
+package com.zaki.dynamic.core.themes
 
 import com.zaki.dynamic.core.model.ThemeDefinition
 import com.zaki.dynamic.core.model.ThemeFamily

@@ -37,8 +37,6 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(project(":theme-core"))
-            implementation(project(":theme-compose"))
-            implementation(project(":theme-adapter-material3"))
             implementation(compose.materialIconsExtended)
             implementation(compose.runtime)
             implementation(compose.foundation)

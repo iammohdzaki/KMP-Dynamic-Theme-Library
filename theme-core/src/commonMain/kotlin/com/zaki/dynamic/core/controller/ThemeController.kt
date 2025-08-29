@@ -19,6 +19,27 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+/**
+ * Controller responsible for managing themes in the application.
+ *
+ * It coordinates between the [ThemeRegistry], [ThemeStore], and [SystemThemeProvider]
+ * to provide theme state, persist user preferences, and resolve the effective theme.
+ *
+ * Usage:
+ * ```
+ * val controller = ThemeController(registry, store, system, defaultThemeId)
+ * controller.setMode(ThemeMode.DARK)
+ * controller.setExplicitTheme(themeId)
+ * ```
+ *
+ * The controller exposes a reactive [state] flow that can be collected to observe changes
+ * in the currently applied [ThemeState].
+ *
+ * @property registry Provides available themes and theme families.
+ * @property store Persists and loads theme selections.
+ * @property system Supplies system dark/light mode state.
+ * @property defaultThemeId ID of the fallback theme if no match is found.
+ */
 class ThemeController(
     private val registry: ThemeRegistry,
     private val store: ThemeStore,
@@ -27,6 +48,13 @@ class ThemeController(
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val _state = MutableStateFlow<ThemeState?>(null)
+
+    /**
+     * Reactive state flow of the current theme.
+     *
+     * Emits the resolved [ThemeState] whenever the theme mode or explicit theme changes.
+     * Initial value is resolved using [ThemeMode.SYSTEM] and falls back to the default theme.
+     */
     val state: StateFlow<ThemeState> = _state.filterNotNull().stateIn(
         scope, SharingStarted.Eagerly, initialValue =
             resolve(ThemeSelection(ThemeMode.SYSTEM, null))
@@ -34,6 +62,7 @@ class ThemeController(
 
     init {
         scope.launch {
+            // Load previously saved theme selection or fall back to system mode
             val persisted = store.load() ?: ThemeSelection(
                 ThemeMode.SYSTEM,
                 null
@@ -42,48 +71,90 @@ class ThemeController(
         }
     }
 
+    /**
+     * Returns the complete list of available themes.
+     */
     fun availableThemes(): List<ThemeDefinition> = registry.all()
 
+    /**
+     * Returns the list of available theme families.
+     * Theme families group related themes (e.g., light/dark variants).
+     */
     fun getAvailableThemeFamilies(): List<ThemeFamily> = registry.families()
 
+    /**
+     * Updates the theme mode (System, Dark, or Light).
+     *
+     * @param mode The new [ThemeMode] to apply.
+     */
     fun setMode(mode: ThemeMode) {
-        update(
-            selection =
-                current().selection.copy(mode = mode)
-        )
+        update(current().selection.copy(mode = mode))
     }
 
+    /**
+     * Sets an explicit theme by its ID.
+     *
+     * If `null`, the controller will use the default strategy
+     * based on [ThemeMode] and available themes.
+     *
+     * @param themeId The ID of the theme to set, or `null` to clear.
+     */
     fun setExplicitTheme(themeId: ThemeId?) {
-        update(
-            selection =
-                current().selection.copy(explicitThemeId = themeId)
-        )
+        update(current().selection.copy(explicitThemeId = themeId))
     }
 
+    /**
+     * Applies the given theme selection, updates the state, and persists it.
+     *
+     * @param selection The new [ThemeSelection] to resolve and apply.
+     */
     private fun update(selection: ThemeSelection) {
         val resolved = resolve(selection)
         _state.value = resolved
         scope.launch { store.save(selection) }
     }
 
-    private fun current(): ThemeState = _state.value ?: resolve(ThemeSelection(ThemeMode.SYSTEM, null))
+    /**
+     * Returns the current resolved [ThemeState].
+     * If state is not yet initialized, falls back to [ThemeMode.SYSTEM].
+     */
+    private fun current(): ThemeState =
+        _state.value ?: resolve(ThemeSelection(ThemeMode.SYSTEM, null))
+
+    /**
+     * Resolves a [ThemeSelection] into a [ThemeState].
+     *
+     * @param selection The selection containing mode and optional explicit theme.
+     * @return The resolved [ThemeState].
+     */
     private fun resolve(selection: ThemeSelection): ThemeState {
         val isDark = when (selection.mode) {
             ThemeMode.SYSTEM -> system.isSystemDark()
             ThemeMode.DARK -> true
             ThemeMode.LIGHT -> false
         }
-        4
+
         val theme = selection.explicitThemeId?.let { registry.get(it) }
             ?: pickDefault(isDark)
+
         return ThemeState(selection, theme)
     }
 
+    /**
+     * Picks the most appropriate default theme based on darkness preference.
+     *
+     * Strategy:
+     * 1. Prefer a theme where `palette.isDark == isDark` and `meta["default"] == "true"`.
+     * 2. Otherwise, pick the first theme matching the darkness preference.
+     * 3. Otherwise, fall back to [defaultThemeId].
+     * 4. Finally, fall back to the first available theme.
+     *
+     * @param isDark Whether a dark theme is preferred.
+     * @return The chosen [ThemeDefinition].
+     */
     private fun pickDefault(isDark: Boolean): ThemeDefinition {
-        // Strategy: prefer meta["default"]=="true" matching isDark; else first matching; else fallback.
         return registry.all().firstOrNull {
-            it.palette.isDark == isDark &&
-                    it.meta["default"] == "true"
+            it.palette.isDark == isDark && it.meta["default"] == "true"
         }
             ?: registry.all().firstOrNull { it.palette.isDark == isDark }
             ?: registry.get(defaultThemeId)

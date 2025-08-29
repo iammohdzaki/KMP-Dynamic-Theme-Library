@@ -11,6 +11,31 @@ import com.zaki.dynamic.core.ThemeControllerHolder
 import com.zaki.dynamic.core.adapter.ComposeThemeAdapter
 import com.zaki.dynamic.core.controller.ThemeController
 
+/**
+ * Top-level provider for applying a dynamic theme within a Compose hierarchy.
+ *
+ * This composable wires together:
+ * - [ThemeController] → source of theme state
+ * - [ComposeThemeAdapter] → bridges your theme definition to MaterialTheme (M2, M3, etc.)
+ * - [LocalThemeController] → makes the controller available via CompositionLocal
+ *
+ * Example:
+ * ```
+ * DynamicThemeProvider(
+ *     controller = themeController,
+ *     adapter = Material3Adapter()
+ * ) {
+ *     // Your app content here
+ *     HomeScreen()
+ * }
+ * ```
+ *
+ * @param controller The [ThemeController] managing the current theme state.
+ * @param adapter The [ComposeThemeAdapter] implementation (e.g., Material2Adapter, Material3Adapter).
+ * @param typography Optional custom typography to override Material defaults.
+ * @param shapes Optional custom shapes to override Material defaults.
+ * @param content The UI content that should be wrapped with the applied theme.
+ */
 @Composable
 fun DynamicThemeProvider(
     controller: ThemeController,

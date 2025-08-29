@@ -43,23 +43,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.russhwolf.settings.Settings
-import com.zaki.dynamic.core.provider.DynamicThemeProvider
 import com.zaki.dynamic.core.LocalThemeController
-import com.zaki.dynamic.core.sheet.ThemePickerBottomSheet
+import com.zaki.dynamic.core.adapter.Material3Adapter
 import com.zaki.dynamic.core.controller.ThemeController
 import com.zaki.dynamic.core.model.ThemeId
+import com.zaki.dynamic.core.provider.DynamicThemeProvider
 import com.zaki.dynamic.core.provider.PlatformSystemThemeProvider
-import com.zaki.dynamic.core.registry.DefaultThemeRegistry
-import com.zaki.dynamic.core.adapter.Material3Adapter
-import com.zaki.dynamic.core.themes.DefaultMaterial3Themes
+import com.zaki.dynamic.core.registry.DefaultThemeRegistryFactory
+import com.zaki.dynamic.core.sheet.ThemePickerBottomSheet
 import com.zaki.dynamic.theme.theme.SansTypography
 
 @Composable
 fun App() {
     val controller = remember {
-        val registry = DefaultThemeRegistry().apply {
-            registerFamilies(DefaultMaterial3Themes.families)
-        }
+        val registry = DefaultThemeRegistryFactory.createWithDefaults()
         ThemeController(
             registry = registry,
             store = SettingsThemeStore(Settings()),

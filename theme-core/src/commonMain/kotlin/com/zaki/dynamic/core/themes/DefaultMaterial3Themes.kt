@@ -80,6 +80,131 @@ object DefaultMaterial3Themes {
         dark = sunsetDark
     )
 
-    val families = listOf(standard, ocean, sunset)
+    // 🍃 Forest
+    val forestLight = ThemeDefinition(
+        id = ThemeId("forest_light"),
+        displayName = "Forest Light",
+        palette = Material3Palettes.forestLight,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val forestDark = ThemeDefinition(
+        id = ThemeId("forest_dark"),
+        displayName = "Forest Dark",
+        palette = Material3Palettes.forestDark,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val forest = ThemeFamily(
+        id = ThemeId("forest"),
+        displayName = "Forest",
+        light = forestLight,
+        dark = forestDark
+    )
+
+    // 🌸 Blossom
+    val blossomLight = ThemeDefinition(
+        id = ThemeId("blossom_light"),
+        displayName = "Blossom Light",
+        palette = Material3Palettes.blossomLight,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val blossomDark = ThemeDefinition(
+        id = ThemeId("blossom_dark"),
+        displayName = "Blossom Dark",
+        palette = Material3Palettes.blossomDark,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val blossom = ThemeFamily(
+        id = ThemeId("blossom"),
+        displayName = "Blossom",
+        light = blossomLight,
+        dark = blossomDark
+    )
+
+    // 🔥 Volcano
+    val volcanoLight = ThemeDefinition(
+        id = ThemeId("volcano_light"),
+        displayName = "Volcano Light",
+        palette = Material3Palettes.volcanoLight,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val volcanoDark = ThemeDefinition(
+        id = ThemeId("volcano_dark"),
+        displayName = "Volcano Dark",
+        palette = Material3Palettes.volcanoDark,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val volcano = ThemeFamily(
+        id = ThemeId("volcano"),
+        displayName = "Volcano",
+        light = volcanoLight,
+        dark = volcanoDark
+    )
+
+    // ❄️ Arctic
+    val arcticLight = ThemeDefinition(
+        id = ThemeId("arctic_light"),
+        displayName = "Arctic Light",
+        palette = Material3Palettes.arcticLight,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val arcticDark = ThemeDefinition(
+        id = ThemeId("arctic_dark"),
+        displayName = "Arctic Dark",
+        palette = Material3Palettes.arcticDark,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val arctic = ThemeFamily(
+        id = ThemeId("arctic"),
+        displayName = "Arctic",
+        light = arcticLight,
+        dark = arcticDark
+    )
+
+    // ⚡ Neon
+    val neonLight = ThemeDefinition(
+        id = ThemeId("neon_light"),
+        displayName = "Neon Light",
+        palette = Material3Palettes.neonLight,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val neonDark = ThemeDefinition(
+        id = ThemeId("neon_dark"),
+        displayName = "Neon Dark",
+        palette = Material3Palettes.neonDark,
+        typography = defaultTypography(),
+        shapes = defaultShapes()
+    )
+
+    val neon = ThemeFamily(
+        id = ThemeId("neon"),
+        displayName = "Neon",
+        light = neonLight,
+        dark = neonDark
+    )
+
+    // 👇 Collect them all
+    val families = listOf(
+        standard, ocean, sunset,
+        forest, blossom, volcano,
+        arctic, neon
+    )
     val defaults: List<ThemeDefinition> = families.flatMap { listOf(it.light, it.dark) }
 }

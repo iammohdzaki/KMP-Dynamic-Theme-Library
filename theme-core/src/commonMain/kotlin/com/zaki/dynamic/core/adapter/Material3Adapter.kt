@@ -8,6 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.zaki.dynamic.core.model.ThemeDefinition
 
+/**
+ * Adapter implementation that maps a [ThemeDefinition] to Material Design 3's [MaterialTheme].
+ *
+ * It constructs a [ColorScheme] from the theme's palette and applies it along with
+ * the given [Typography] and [Shapes]. If typography or shapes are not provided,
+ * the current defaults from [MaterialTheme] are used.
+ */
 class Material3Adapter : ComposeThemeAdapter {
 
     @Composable
@@ -56,7 +63,7 @@ class Material3Adapter : ComposeThemeAdapter {
             surfaceTint = Color(theme.palette.primary)
         )
 
-        androidx.compose.material3.MaterialTheme(
+        MaterialTheme(
             colorScheme = colors,
             typography = typography ?: MaterialTheme.typography,
             shapes = shapes ?: MaterialTheme.shapes,

@@ -1,6 +1,5 @@
 package com.zaki.dynamic.core.provider
 
-import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 

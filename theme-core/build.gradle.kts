@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "io.github.iammohdzaki.kmpalette"
-version = findProperty("version") as String? ?: "0.0.1"
+version = findProperty("version") as String? ?: "0.0.2"
 
 android {
     namespace = "com.zaki.dynamic.theme"

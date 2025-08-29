@@ -52,16 +52,18 @@ import com.zaki.dynamic.core.provider.PlatformSystemThemeProvider
 import com.zaki.dynamic.core.registry.DefaultThemeRegistryFactory
 import com.zaki.dynamic.core.sheet.ThemePickerBottomSheet
 import com.zaki.dynamic.theme.theme.SansTypography
+import com.zaki.dynamic.theme.theme.defaultFamily
 
 @Composable
 fun App() {
     val controller = remember {
         val registry = DefaultThemeRegistryFactory.createWithDefaults()
+        registry.registerFamily(defaultFamily)
         ThemeController(
             registry = registry,
             store = SettingsThemeStore(Settings()),
             system = PlatformSystemThemeProvider(),
-            defaultThemeId = ThemeId("m3_light")
+            defaultThemeId = ThemeId("default_family")
         )
     }
 

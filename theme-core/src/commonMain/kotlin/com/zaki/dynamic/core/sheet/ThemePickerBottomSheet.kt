@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DarkMode
@@ -36,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import com.zaki.dynamic.core.LocalThemeController
+import com.zaki.dynamic.core.model.ThemeId
 import com.zaki.dynamic.core.model.ThemeMode
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,6 +60,8 @@ fun ThemePickerBottomSheet(
         fam.light.id == state.resolved.id || fam.dark.id == state.resolved.id
     }
 
+    val sortedFamilies = controller.getAvailableThemeFamiliesInOrder(currentFamily?.id ?: ThemeId("standard"))
+
     // Derive effective mode
     val effectiveMode = when {
         state.selection.mode == ThemeMode.SYSTEM -> ThemeMode.SYSTEM
@@ -64,6 +69,7 @@ fun ThemePickerBottomSheet(
         else -> ThemeMode.LIGHT
     }
 
+    val scrollState = rememberScrollState()
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
@@ -71,6 +77,7 @@ fun ThemePickerBottomSheet(
     ) {
         Column(
             Modifier
+                .verticalScroll(scrollState)
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
@@ -133,7 +140,7 @@ fun ThemePickerBottomSheet(
                 modifier = Modifier.padding(bottom = 12.dp)
             )
 
-            families.forEach { family ->
+            sortedFamilies.forEach { family ->
                 val isSelectedFamily = state.resolved.id in listOf(family.light.id, family.dark.id)
                 val isDarkMode = state.selection.mode == ThemeMode.DARK
 

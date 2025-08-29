@@ -1,6 +1,5 @@
 package com.zaki.dynamic.core.controller
 
-import com.zaki.dynamic.core.provider.SystemThemeProvider
 import com.zaki.dynamic.core.model.ThemeDefinition
 import com.zaki.dynamic.core.model.ThemeFamily
 import com.zaki.dynamic.core.model.ThemeId
@@ -8,6 +7,7 @@ import com.zaki.dynamic.core.model.ThemeMode
 import com.zaki.dynamic.core.model.ThemeSelection
 import com.zaki.dynamic.core.model.ThemeState
 import com.zaki.dynamic.core.persistance.ThemeStore
+import com.zaki.dynamic.core.provider.SystemThemeProvider
 import com.zaki.dynamic.core.registry.ThemeRegistry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -81,6 +81,8 @@ class ThemeController(
      * Theme families group related themes (e.g., light/dark variants).
      */
     fun getAvailableThemeFamilies(): List<ThemeFamily> = registry.families()
+    fun getAvailableThemeFamiliesInOrder(defaultThemeId: ThemeId): List<ThemeFamily> =
+        registry.families().sortedByDescending { it.id == defaultThemeId }
 
     /**
      * Updates the theme mode (System, Dark, or Light).
@@ -153,6 +155,10 @@ class ThemeController(
      * @return The chosen [ThemeDefinition].
      */
     private fun pickDefault(isDark: Boolean): ThemeDefinition {
+        registry.families().firstOrNull { it.id == defaultThemeId }?.let {
+            return if (isDark) it.dark else it.light
+        }
+
         return registry.all().firstOrNull {
             it.palette.isDark == isDark && it.meta["default"] == "true"
         }

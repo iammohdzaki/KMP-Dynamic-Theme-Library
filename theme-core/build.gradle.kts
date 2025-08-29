@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
@@ -14,7 +15,7 @@ plugins {
 }
 
 group = "io.github.iammohdzaki.kmpalette"
-version = findProperty("version") as String? ?: "0.0.2"
+version = findProperty("version") as String? ?: "0.0.3"
 
 android {
     namespace = "com.zaki.dynamic.theme"
@@ -28,13 +29,13 @@ android {
 }
 
 kotlin {
-    androidTarget{
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+
     applyDefaultHierarchyTemplate()
     jvm("desktop")
     wasmJs()

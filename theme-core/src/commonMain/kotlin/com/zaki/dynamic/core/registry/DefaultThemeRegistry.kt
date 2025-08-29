@@ -32,6 +32,10 @@ internal class DefaultThemeRegistry : ThemeRegistry {
         familyMap[family.id.value] = family
     }
 
+    override fun registerFamily(vararg families: ThemeFamily) {
+        families.forEach(::registerFamily)
+    }
+
     override fun registerFamilies(families: List<ThemeFamily>) {
         families.forEach(::registerFamily)
     }

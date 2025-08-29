@@ -51,8 +51,10 @@ import com.zaki.dynamic.core.provider.DynamicThemeProvider
 import com.zaki.dynamic.core.provider.PlatformSystemThemeProvider
 import com.zaki.dynamic.core.registry.DefaultThemeRegistryFactory
 import com.zaki.dynamic.core.sheet.ThemePickerBottomSheet
+import com.zaki.dynamic.core.themes.palettes.RedFlamePalette
+import com.zaki.dynamic.theme.persistance.SettingsThemeStore
+import com.zaki.dynamic.theme.theme.DefaultPalette.defaultFamily
 import com.zaki.dynamic.theme.theme.SansTypography
-import com.zaki.dynamic.theme.theme.defaultFamily
 
 @Composable
 fun App() {
@@ -63,7 +65,7 @@ fun App() {
             registry = registry,
             store = SettingsThemeStore(Settings()),
             system = PlatformSystemThemeProvider(),
-            defaultThemeId = ThemeId("default_family")
+            defaultThemeId = ThemeId(RedFlamePalette.FAMILY_ID)
         )
     }
 

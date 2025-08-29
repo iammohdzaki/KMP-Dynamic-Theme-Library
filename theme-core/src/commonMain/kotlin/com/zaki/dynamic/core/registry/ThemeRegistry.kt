@@ -70,6 +70,7 @@ interface ThemeRegistry {
      * @param family The theme family to register.
      */
     fun registerFamily(family: ThemeFamily)
+    fun registerFamily(vararg families: ThemeFamily)
 
     /**
      * Registers multiple [ThemeFamily] instances.

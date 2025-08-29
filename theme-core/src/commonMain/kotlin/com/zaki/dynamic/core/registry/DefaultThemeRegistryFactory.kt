@@ -21,10 +21,19 @@ object DefaultThemeRegistryFactory {
     fun createWithDefaults(): ThemeRegistry {
         return DefaultThemeRegistry().apply {
             // Register families first (this auto-registers light & dark)
-            registerFamilies(DefaultMaterial3Themes.families)
+            registerFamilies(DefaultMaterial3Themes.getFamilies())
 
             // If you also want to support "loose" themes not in a family:
-            registerAll(DefaultMaterial3Themes.defaults)
+            registerAll(DefaultMaterial3Themes.getDefaults())
         }
+    }
+
+    /**
+     * Creates a [DefaultThemeRegistry].
+     *
+     * @return A [ThemeRegistry]
+     */
+    fun create(): ThemeRegistry {
+        return DefaultThemeRegistry()
     }
 }

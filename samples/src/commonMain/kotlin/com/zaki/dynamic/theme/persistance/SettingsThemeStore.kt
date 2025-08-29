@@ -1,4 +1,4 @@
-package com.zaki.dynamic.theme
+package com.zaki.dynamic.theme.persistance
 
 import com.russhwolf.settings.Settings
 import com.zaki.dynamic.core.model.ThemeSelection

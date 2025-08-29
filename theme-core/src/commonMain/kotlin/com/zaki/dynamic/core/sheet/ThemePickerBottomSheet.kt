@@ -31,6 +31,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,15 +53,17 @@ fun ThemePickerBottomSheet(
     val state by controller.state.collectAsState()
     val sheetState = rememberModalBottomSheetState()
 
-    val families = controller.getAvailableThemeFamilies()
+    val families = remember { controller.getAvailableThemeFamilies() }
 
-
-    // Find which family current theme belongs to
+    // Find which family the current theme belongs to
     val currentFamily = families.find { fam ->
         fam.light.id == state.resolved.id || fam.dark.id == state.resolved.id
     }
 
-    val sortedFamilies = controller.getAvailableThemeFamiliesInOrder(currentFamily?.id ?: ThemeId("standard"))
+    // ✅ Compute sorted families ONCE, based on first-opened family
+    val sortedFamilies = remember {
+        controller.getAvailableThemeFamiliesInOrder(currentFamily?.id ?: ThemeId("standard"))
+    }
 
     // Derive effective mode
     val effectiveMode = when {
